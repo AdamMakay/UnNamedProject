@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Numeric Sound Lab</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/main.js" type="module" defer></script>
+</head>
+<body>
+  <header>
+    <h1>Numeric Sound Lab</h1>
+    <p>Explore, analyze and transform number sequences.</p>
+  </header>
+
+  <main>
+    <section>
+      <h2>Number input</h2>
+      <label for="number-input">Enter numbers separated by commas, spaces or semicolons:</label>
+      <textarea id="number-input" rows="4" placeholder="Example: 2, 4, 6, 8, 10"></textarea>
+      <div class="buttons">
+        <button id="analyze-button">Analyze numbers</button>
+        <button id="clear-button">Clear</button>
+      </div>
+      <p id="input-message"></p>
+    </section>
+
+
+    <section>
+      <h2>Statistics</h2>
+      <div id="statistics-output">Enter numbers to see statistics.</div>
+    </section>
+
+
+    <section>
+      <h2>Sequence analysis</h2>
+      <div id="sequence-output">Your sequence will be analyzed here.</div>
+    </section>
+
+
+    <section>
+      <h2>Number classification</h2>
+      <div id="classification-output">Number classifications will appear here.</div>
+    </section>
+
+
+    <section>
+      <h2>Conversions</h2>
+      <div id="conversion-output">Conversions will appear here.</div>
+    </section>
+
+
+    <section>
+      <h2>Transformations</h2>
+      <label for="transformation-select">Choose a transformation:</label>
+      <select id="transformation-select">
+        <option value="double">Double every number</option>
+        <option value="square">Square every number</option>
+        <option value="reverse">Reverse the sequence</option>
+        <option value="ascending">Sort ascending</option>
+        <option value="descending">Sort descending</option>
+        <option value="cumulative">Cumulative sum</option>
+      </select>
+      <button id="transform-button">Transform</button>
+      <div id="transformation-output"></div>
+    </section>
+  </main>
+</body>
+</html>
