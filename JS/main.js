@@ -1,5 +1,5 @@
 import { getNumbersFromInput } from "./input.js";
-import { getStatistics, analyzeSequence } from "./Math Stuffs/analysis.js";
+import { getStatistics, analyzeSequence, getNextNumOfSequence } from "./Math Stuffs/analysis.js";
 import { classifyNumbers, convertNumbers, transformNumbers } from "./Math Stuffs/math-tools.js";
 import { showList, formatNumber } from "./Math Stuffs/utils.js";
 
@@ -15,10 +15,21 @@ const conversionOutput = document.getElementById("conversion-output");
 const transformationSelect = document.getElementById("transformation-select");
 const transformButton = document.getElementById("transform-button");
 const transformationOutput = document.getElementById("transformation-output");
+const sequencePredictionOutput = document.querySelector("#sequence-prediction-output");
 
 let currentNumbers = [];
+let currentStats = {
+  sum: 0,
+  average: 0,
+  median: 0,
+  smallest: 0,
+  largest: 0,
+  range: 0,
+  sequenceType: "",
+  differences: []
+};
 
-const analyzeInput = function() {
+const analyzeInput = function () {
   const numbers = getNumbersFromInput(numberInput.value);
 
   if (numbers === null) {
@@ -30,18 +41,24 @@ const analyzeInput = function() {
   currentNumbers = numbers;
   inputMessage.textContent = "Input accepted.";
 
-  const stats = getStatistics(numbers);
+  currentStats = getStatistics(numbers);
   statisticsOutput.innerHTML = `
-    <p>Sum: ${formatNumber(stats.sum)}</p>
-    <p>Average: ${formatNumber(stats.average)}</p>
-    <p>Median: ${formatNumber(stats.median)}</p>
-    <p>Smallest: ${formatNumber(stats.smallest)}</p>
-    <p>Largest: ${formatNumber(stats.largest)}</p>
-    <p>Range: ${formatNumber(stats.range)}</p>
+    <p>Sum: ${formatNumber(currentStats.sum)}</p>
+    <p>Average: ${formatNumber(currentStats.average)}</p>
+    <p>Median: ${formatNumber(currentStats.median)}</p>
+    <p>Smallest: ${formatNumber(currentStats.smallest)}</p>
+    <p>Largest: ${formatNumber(currentStats.largest)}</p>
+    <p>Range: ${formatNumber(currentStats.range)}</p>
   `;
 
   const sequence = analyzeSequence(numbers);
+  currentStats.sequenceType = sequence.type;
+  currentStats.differences = sequence.differences;
   sequenceOutput.innerHTML = `<p>${sequence.type}</p><p>Differences: ${sequence.differences.join(", ") || "No differences could be calculated."}</p>`;
+
+  const nextPossibleNumOfSequence = getNextNumOfSequence(currentNumbers, currentStats);
+  sequencePredictionOutput.innerHTML = `<p>Next possible num of sequence: ${nextPossibleNumOfSequence === -1 ? "cannot be determined based on only one number!" : nextPossibleNumOfSequence}</p>`;
+
   classificationOutput.innerHTML = showList(classifyNumbers(numbers));
   conversionOutput.innerHTML = showList(convertNumbers(numbers));
   transformationOutput.textContent = "Choose a transformation and press the button.";
