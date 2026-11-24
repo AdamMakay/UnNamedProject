@@ -24,8 +24,8 @@ export const getStatistics = (numbers) => {
   }
 
   let range = largest - smallest;
-  
-  return { sum, average, median, smallest, largest, range };
+
+  return { sum: sum, average: average, median: median, smallest: smallest, largest: largest, range: range };
 };
 
 
@@ -52,4 +52,43 @@ export const analyzeSequence = (numbers) => {
   else if (arithmetic) type = "Arithmetic sequence.";
 
   return { type, differences };
+};
+
+
+export const getNextNumOfSequence = (numbers, stats) => {
+  let nextNum = numbers[numbers.length - 1];
+  const diffs = stats.differences;
+  //window.alert("PREDICT");
+  switch (stats.sequenceType) {
+    case "Only one number was entered.":
+      nextnum = -1;
+      //window.alert("!");
+      break;
+    case "Strictly ascending sequence.":
+      if (diffs.every(diff => diff === diffs[0])) { nextNum += stats.differences[0]; console.log(`ASCENDING PREDICTION : ${nextNum}`); }
+      else {
+        // PATTERN ANALYZEMENT
+        
+      }
+      //window.alert("!!");
+      break;
+    case "Strictly descending sequence.":
+      if (stats.differences.length === 1) { nextNum -= stats.differences[0]; }
+      else {
+        // PATTERN ANALYZEMENT
+      }
+      //window.alert("!!!");
+      break;
+    case "No clear basic pattern detected.":
+      if (stats.differences.length === 1) { nextNum -= stats.differences[0]; }
+      else {
+        if (![...diffs].every(num => num === 0)) {
+          // PATTERN ANALYZEMENT
+        }
+      }
+      //window.alert("!!!!");
+      break;
+    default:
+  }
+  return nextNum;
 };
